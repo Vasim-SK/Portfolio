@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shaik Abdul Vasim — Developer & Entrepreneur</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        display: ['Fredoka', 'sans-serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        mono: ['"IBM Plex Mono"', 'monospace'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --bg: #FFFCF4;
+            --surface: #FFFFFF;
+            --ink: #201A2C;
+            --ink-soft: #5B5468;
+            --ink-faint: #948C9E;
+            --coral: #FF6B4A;
+            --blue: #3D5AFE;
+            --yellow: #FFC93C;
+            --pink: #FF5DA2;
+            --mint: #2BB673;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg);
+            background-image: radial-gradient(rgba(32,26,44,0.09) 1.4px, transparent 1.4px);
+            background-size: 22px 22px;
+            color: var(--ink);
+            overflow-x: hidden;
+        }
+        h1, h2, h3, .font-display { font-family: 'Fredoka', sans-serif; }
+        .mono { font-family: 'IBM Plex Mono', monospace; }
+
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--ink); border-radius: 6px; border: 2px solid var(--bg); }
+
+        /* ===== Hard-shadow sticker card — the signature move ===== */
+        .card {
+            background: var(--surface);
+            border: 2.5px solid var(--ink);
+            border-radius: 20px;
+            box-shadow: 5px 5px 0 var(--ink);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .card-hover:hover {
+            transform: translate(-3px, -3px);
+            box-shadow: 8px 8px 0 var(--ink);
+        }
+
+        .btn {
+            border: 2.5px solid var(--ink);
+            box-shadow: 4px 4px 0 var(--ink);
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+        .btn:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--ink); }
+        .btn:active { transform: translate(2px, 2px); box-shadow: 0 0 0 var(--ink); }
+
+        .sticker {
+            border: 2px solid var(--ink);
+            box-shadow: 3px 3px 0 var(--ink);
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        .term {
+            background: #211B2C;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 2.5px solid var(--ink);
+        }
+        .term-bar {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 11px 14px;
+            background: #2C2438;
+            border-bottom: 2px solid var(--ink);
+        }
+        .term-dot { width: 10px; height: 10px; border-radius: 50%; border: 1.5px solid rgba(0,0,0,0.25); }
+        .term-body { padding: 20px; font-size: 12.5px; line-height: 1.9; color: #E4DFF0; }
+        .term-prompt { color: var(--yellow); }
+        .term-muted { color: #8A81A0; }
+        .term-cursor {
+            display: inline-block;
+            width: 7px; height: 14px;
+            background: var(--coral);
+            vertical-align: -2px;
+            animation: blink-caret 0.9s step-end infinite;
+        }
+
+        .chip {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            padding: 5px 11px;
+            border-radius: 999px;
+            border: 1.5px solid var(--ink);
+            color: var(--ink);
+            background: var(--surface);
+            transition: transform 0.15s ease, background 0.15s ease;
+        }
+        .chip:hover { transform: rotate(-3deg); background: var(--yellow); }
+
+        .squiggle { position: relative; white-space: nowrap; }
+        .squiggle svg { position: absolute; left: 0; bottom: -8px; width: 100%; height: 10px; }
+
+        @keyframes fade-up { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes blink-caret { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+        @keyframes wiggle { 0%, 100% { transform: rotate(-4deg); } 50% { transform: rotate(4deg); } }
+        @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        @keyframes status-pulse {
+            0% { box-shadow: 0 0 0 0 rgba(43,182,115,0.4); }
+            70% { box-shadow: 0 0 0 8px rgba(43,182,115,0); }
+            100% { box-shadow: 0 0 0 0 rgba(43,182,115,0); }
+        }
+        .status-pulse { animation: status-pulse 2s infinite; }
+        .animate-bob { animation: bob 3.5s ease-in-out infinite; }
+        .animate-wiggle:hover { animation: wiggle 0.4s ease-in-out; }
+
+        .animate-fade-up { animation: fade-up 0.7s cubic-bezier(0.16,1,0.3,1) forwards; }
+        .delay-100 { animation-delay: 0.08s; } .delay-200 { animation-delay: 0.16s; }
+        .delay-300 { animation-delay: 0.24s; } .delay-400 { animation-delay: 0.32s; }
+
+        .reveal { opacity: 0; transform: translateY(20px) rotate(-0.5deg); transition: opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1); }
+        .reveal.visible { opacity: 1; transform: translateY(0) rotate(0deg); }
+
+        .nav-link { position: relative; color: var(--ink-soft); padding: 6px 12px; border-radius: 999px; transition: all 0.2s ease; }
+        .nav-link.active, .nav-link:hover { color: var(--ink); background: var(--yellow); }
+
+        .mobile-menu { transform: translateX(100%); transition: transform 0.35s cubic-bezier(0.16,1,0.3,1); }
+        .mobile-menu.open { transform: translateX(0); }
+
+        @keyframes toast-in { from { opacity: 0; transform: translateY(16px) rotate(-2deg); } to { opacity: 1; transform: translateY(0) rotate(0); } }
+        @keyframes toast-out { from { opacity: 1; } to { opacity: 0; transform: translateY(16px); } }
+        .toast-enter { animation: toast-in 0.35s ease forwards; }
+        .toast-exit { animation: toast-out 0.35s ease forwards; }
+
+        .confetti-piece { position: fixed; top: 0; left: 0; width: 8px; height: 8px; pointer-events: none; z-index: 200; }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="toastContainer" class="fixed bottom-6 right-6 z-[100] flex flex-col gap-3"></div>
+
+    <!-- NAVIGATION -->
+    <nav class="fixed top-0 left-0 right-0 z-50 h-16" style="background: rgba(255,252,244,0.92); backdrop-filter: blur(8px); border-bottom: 2.5px solid var(--ink);">
+        <div class="max-w-6xl mx-auto h-full px-6 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-9 h-9 rounded-xl flex items-center justify-center text-xs font-semibold mono border-2 animate-wiggle"
+                     style="background: var(--coral); color: var(--surface); border-color: var(--ink); box-shadow: 2px 2px 0 var(--ink);">SV</div>
+                <span class="text-sm font-semibold font-display" style="color: var(--ink);">Shaik Vasim</span>
+            </a>
+            <div class="hidden md:flex items-center gap-2">
+                <a href="#hero" class="nav-link active text-sm font-medium">Home</a>
+                <a href="#about" class="nav-link text-sm font-medium">About</a>
+                <a href="#skills" class="nav-link text-sm font-medium">Skills</a>
+                <a href="#projects" class="nav-link text-sm font-medium">Projects</a>
+                <a href="#vision" class="nav-link text-sm font-medium">Vision</a>
+                <a href="#contact" class="nav-link text-sm font-medium">Contact</a>
+            </div>
+            <div class="hidden md:block">
+                <a href="#contact" class="btn inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-semibold"
+                   style="background: var(--coral); color: var(--surface);">
+                    Let's Connect 👋
+                </a>
+            </div>
+            <button id="mobileToggle" class="md:hidden" style="color: var(--ink);">
+                <iconify-icon icon="lucide:menu" width="24"></iconify-icon>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="mobile-menu fixed top-0 right-0 bottom-0 w-72 z-[60] p-8 flex flex-col gap-6"
+         style="background: var(--surface); border-left: 2.5px solid var(--ink);">
+        <button id="mobileClose" class="self-end mb-4" style="color: var(--ink);">
+            <iconify-icon icon="lucide:x" width="24"></iconify-icon>
+        </button>
+        <a href="#hero" class="text-lg font-semibold font-display mobile-link" style="color: var(--ink);">Home</a>
+        <a href="#about" class="text-lg font-semibold font-display mobile-link" style="color: var(--ink);">About</a>
+        <a href="#skills" class="text-lg font-semibold font-display mobile-link" style="color: var(--ink);">Skills</a>
+        <a href="#projects" class="text-lg font-semibold font-display mobile-link" style="color: var(--ink);">Projects</a>
+        <a href="#vision" class="text-lg font-semibold font-display mobile-link" style="color: var(--ink);">Vision</a>
+        <a href="#contact" class="text-lg font-semibold font-display mobile-link" style="color: var(--ink);">Contact</a>
+        <a href="https://www.linkedin.com/in/shaik-abdul-vasim-332498303/" target="_blank"
+           class="btn mt-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full text-sm font-semibold"
+           style="background: var(--blue); color: var(--surface);">
+            <iconify-icon icon="mdi:linkedin" width="16"></iconify-icon> LinkedIn
+        </a>
+    </div>
+
+    <!-- ===== HERO ===== -->
+    <section id="hero" class="relative min-h-screen flex items-center pt-24 pb-16">
+        <div class="max-w-6xl mx-auto px-6 grid lg:grid-cols-[1.1fr_1fr] gap-16 items-center">
+
+            <div>
+                <div class="animate-fade-up inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8 sticker" style="opacity:0; background: var(--yellow); transform: rotate(-2deg);">
+                    <div class="w-2 h-2 rounded-full status-pulse" style="background: var(--mint);"></div>
+                    Available for collaboration ☕
+                </div>
+
+                <h1 class="animate-fade-up delay-100 text-5xl md:text-7xl font-semibold leading-[1.05] tracking-tight mb-6" style="opacity:0; color: var(--ink);">
+                    Hey, I'm<br>Vasim <span style="display:inline-block;">👋</span>
+                </h1>
+
+                <p class="animate-fade-up delay-200 text-lg md:text-xl mb-6 font-medium" style="opacity:0; color: var(--ink-soft);">
+                    Python dev building AI-powered stuff, from browsers to backends.
+                </p>
+
+                <p class="animate-fade-up delay-300 text-sm md:text-base max-w-md mb-10 leading-relaxed" style="opacity:0; color: var(--ink-soft);">
+                    Developer, entrepreneur, and full-time tinkerer. I write a lot of Python, break things on purpose to learn, and I'm currently building
+                    <span class="squiggle" style="font-weight: 600; color: var(--ink);">Atom
+                        <svg viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0,6 Q10,0 20,6 T40,6 T60,6 T80,6 T100,6" fill="none" stroke="var(--coral)" stroke-width="2.5" stroke-linecap="round"/></svg>
+                    </span> — a minimalist, AI supported browser.
+                </p>
+
+                <div class="animate-fade-up delay-400 flex flex-col sm:flex-row gap-4" style="opacity:0;">
+                    <a href="#contact" class="btn inline-flex items-center justify-center gap-2 px-7 py-3 rounded-full text-sm font-semibold" style="background: var(--ink); color: var(--bg);">
+                        Get In Touch
+                    </a>
+                    <a href="#projects" class="btn inline-flex items-center justify-center gap-2 px-7 py-3 rounded-full text-sm font-semibold" style="background: var(--surface); color: var(--ink);">
+                        See What I'm Building
+                    </a>
+                </div>
+            </div>
+
+            <!-- Right: Terminal + stickers -->
+            <div class="reveal relative">
+                <div class="absolute -top-6 -left-6 z-10 sticker px-3 py-1.5 rounded-lg text-[11px] font-medium animate-bob" style="background: var(--pink); color: var(--surface); transform: rotate(-8deg);">
+                    🐍 pythonista
+                </div>
+                <div class="absolute -bottom-5 -right-4 z-10 sticker px-3 py-1.5 rounded-lg text-[11px] font-medium animate-bob" style="background: var(--blue); color: var(--surface); transform: rotate(6deg); animation-delay: 1s;">
+                    🤖 AI curious
+                </div>
+                <div class="term">
+                    <div class="term-bar">
+                        <div class="term-dot" style="background:#FF6B4A;"></div>
+                        <div class="term-dot" style="background:#FFC93C;"></div>
+                        <div class="term-dot" style="background:#2BB673;"></div>
+                        <span class="mono text-[11px] ml-2" style="color:#8A81A0;">atom — zsh</span>
+                    </div>
+                    <div class="term-body mono">
+                        <div><span class="term-prompt">$</span> atombrowse --launch</div>
+                        <div class="term-muted">Initializing browser core...</div>
+                        <div class="term-muted">Loading AI assist module... done ✓</div>
+                        <div>&nbsp;</div>
+                        <div>Ready. Ask AtomBrowse anything, or type a URL.</div>
+                        <div><span class="term-prompt">&gt;</span> <span class="term-cursor"></span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ABOUT ===== -->
+    <section id="about" class="relative py-24 md:py-28">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="reveal text-3xl md:text-4xl font-semibold tracking-tight mb-16" style="color: var(--ink);">
+                Driven by curiosity <span style="display:inline-block;">🚀</span>
+            </h2>
+
+            <div class="grid md:grid-cols-[0.8fr_1.2fr] gap-12 items-start">
+                <div class="reveal card card-hover rounded-2xl p-8" style="transform: rotate(-1deg);">
+                    <div class="w-20 h-20 rounded-full flex items-center justify-center mb-6 mx-auto border-2" style="background: var(--coral); border-color: var(--ink);">
+                        <span class="text-2xl font-semibold font-display" style="color: var(--surface);">SV</span>
+                    </div>
+                    <div class="grid grid-cols-3 gap-3 text-center pt-6" style="border-top: 2px dashed var(--ink);">
+                        <div><div class="text-lg">🐍</div><div class="text-[11px] mt-1 font-medium" style="color: var(--ink-soft);">Python</div></div>
+                        <div><div class="text-lg">🤖</div><div class="text-[11px] mt-1 font-medium" style="color: var(--ink-soft);">AI &amp; ML</div></div>
+                        <div><div class="text-lg">☕</div><div class="text-[11px] mt-1 font-medium" style="color: var(--ink-soft);">Fuel</div></div>
+                    </div>
+                </div>
+
+                <div class="reveal space-y-5">
+                    <p class="text-sm md:text-base leading-relaxed" style="color: var(--ink-soft);">
+                        <span style="color: var(--ink); font-weight: 600;">Hi, I'm Vasim</span> — a developer and entrepreneur with a steady drive to build things that work. I believe the best products come from the intersection of technical skill and entrepreneurial vision.
+                    </p>
+                    <p class="text-sm md:text-base leading-relaxed" style="color: var(--ink-soft);">
+                        Right now, I'm deep in the fundamentals — Python, object-oriented design, and applied AI — while building Atom as a real, working project rather than just a learning exercise.
+                    </p>
+                    <p class="text-sm md:text-base leading-relaxed" style="color: var(--ink-soft);">
+                        My goal is to build my own startup — a company that solves real problems and creates lasting impact. I'm not just learning to code; I'm learning to build things that last.
+                    </p>
+
+                    <div class="card card-hover rounded-2xl p-6 mt-8" style="border-color: var(--coral); transform: rotate(0.6deg);">
+                        <p class="text-sm font-medium italic leading-relaxed" style="color: var(--ink);">
+                            "If you share the same mindset — the hunger to build, the courage to start, the discipline to keep going — let's connect."
+                        </p>
+                        <p class="text-xs mt-3" style="color: var(--ink-faint);">— Shaik Abdul Vasim</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SKILLS ===== -->
+    <section id="skills" class="relative py-24 md:py-28" style="background: var(--surface);">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="reveal text-3xl md:text-4xl font-semibold tracking-tight mb-4" style="color: var(--ink);">
+                Core skills <span style="display:inline-block;">🛠️</span>
+            </h2>
+            <p class="reveal text-sm max-w-xl mb-14" style="color: var(--ink-soft);">The stuff I'm building deep, hands-on expertise in — through real projects, not just tutorials.</p>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="reveal card card-hover rounded-2xl p-6" style="transform: rotate(-0.8deg);">
+                    <div class="w-11 h-11 rounded-xl flex items-center justify-center mb-5 border-2" style="background: var(--coral); border-color: var(--ink);">
+                        <iconify-icon icon="lucide:code-2" width="20" style="color: var(--surface);"></iconify-icon>
+                    </div>
+                    <h3 class="text-base font-semibold font-display mb-2" style="color: var(--ink);">Python &amp; OOPs</h3>
+                    <p class="text-sm leading-relaxed" style="color: var(--ink-soft);">Building applications and practical projects with Python and object-oriented programming principles.</p>
+                    <div class="mt-4 flex flex-wrap gap-2"><span class="chip">python</span><span class="chip">oops</span></div>
+                </div>
+
+                <div class="reveal card card-hover rounded-2xl p-6" style="transform: rotate(0.9deg);">
+                    <div class="w-11 h-11 rounded-xl flex items-center justify-center mb-5 border-2" style="background: var(--blue); border-color: var(--ink);">
+                        <iconify-icon icon="lucide:boxes" width="20" style="color: var(--surface);"></iconify-icon>
+                    </div>
+                    <h3 class="text-base font-semibold font-display mb-2" style="color: var(--ink);">Prompt Engineering</h3>
+                    <p class="text-sm leading-relaxed" style="color: var(--ink-soft);">Designing effective prompts to get reliable, useful, and task-focused results from AI models.</p>
+                    <div class="mt-4 flex flex-wrap gap-2"><span class="chip">prompts</span><span class="chip">llms</span></div>
+                </div>
+
+                <div class="reveal card card-hover rounded-2xl p-6" style="transform: rotate(-0.5deg);">
+                    <div class="w-11 h-11 rounded-xl flex items-center justify-center mb-5 border-2" style="background: var(--pink); border-color: var(--ink);">
+                        <iconify-icon icon="lucide:brain" width="20" style="color: var(--surface);"></iconify-icon>
+                    </div>
+                    <h3 class="text-base font-semibold font-display mb-2" style="color: var(--ink);">Vibe Coding</h3>
+                    <p class="text-sm leading-relaxed" style="color: var(--ink-soft);">Using AI-assisted development workflows to build, experiment, iterate, and turn ideas into working projects.</p>
+                    <div class="mt-4 flex flex-wrap gap-2"><span class="chip">ai coding</span><span class="chip">building</span></div>
+                </div>
+
+                <div class="reveal card card-hover rounded-2xl p-6" style="transform: rotate(0.7deg);">
+                    <div class="w-11 h-11 rounded-xl flex items-center justify-center mb-5 border-2" style="background: var(--yellow); border-color: var(--ink);">
+                        <iconify-icon icon="lucide:message-square-code" width="20" style="color: var(--ink);"></iconify-icon>
+                    </div>
+                    <h3 class="text-base font-semibold font-display mb-2" style="color: var(--ink);">AI Tools</h3>
+                    <p class="text-sm leading-relaxed" style="color: var(--ink-soft);">Working with modern AI tools for research, development, productivity, automation, and problem solving.</p>
+                    <div class="mt-4 flex flex-wrap gap-2"><span class="chip">ai tools</span><span class="chip">automation</span></div>
+                </div>
+
+                <div class="reveal card card-hover rounded-2xl p-6" style="transform: rotate(-0.9deg);">
+                    <div class="w-11 h-11 rounded-xl flex items-center justify-center mb-5 border-2" style="background: var(--mint); border-color: var(--ink);">
+                        <iconify-icon icon="lucide:heart-handshake" width="20" style="color: var(--surface);"></iconify-icon>
+                    </div>
+                    <h3 class="text-base font-semibold font-display mb-2" style="color: var(--ink);">Communication Skills</h3>
+                    <p class="text-sm leading-relaxed" style="color: var(--ink-soft);">Clear communication, active listening, and expressing ideas effectively in professional and collaborative environments.</p>
+                    <div class="mt-4 flex flex-wrap gap-2"><span class="chip">communication</span><span class="chip">teamwork</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PROJECTS ===== -->
+    <section id="projects" class="relative py-24 md:py-28">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="reveal text-3xl md:text-4xl font-semibold tracking-tight mb-4" style="color: var(--ink);">
+                Projects <span style="display:inline-block;">🧪</span>
+            </h2>
+            <p class="reveal text-sm max-w-xl mb-14" style="color: var(--ink-soft);">What I'm currently building.</p>
+
+            <div class="reveal card rounded-2xl overflow-hidden grid lg:grid-cols-2">
+                <div class="p-8 md:p-10 flex items-center" style="background: #211B2C;">
+                    <div class="term w-full" style="border: none;">
+                        <div class="term-bar">
+                            <div class="term-dot" style="background:#FF6B4A;"></div>
+                            <div class="term-dot" style="background:#FFC93C;"></div>
+                            <div class="term-dot" style="background:#2BB673;"></div>
+                            <span class="mono text-[11px] ml-2" style="color:#8A81A0;">atombrowse</span>
+                        </div>
+                        <div class="term-body mono">
+                            <div><span class="term-prompt">$</span> open atombrowse.dev</div>
+                            <div class="term-muted">Rendering page in terminal-first UI...</div>
+                            <div>&nbsp;</div>
+                            <div class="term-muted">→ Task-based browsing &amp; clean interface</div>
+                            <div class="term-muted">→ AI suggestions, assistance &amp; quick answers</div>
+                            <div class="term-muted">→ Notes &amp; calendar for planning and tracking</div>
+                            <div>&nbsp;</div>
+                            <div><span class="term-prompt">&gt;</span> <span class="term-cursor"></span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-8 md:p-10">
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="w-2 h-2 rounded-full status-pulse" style="background: var(--mint);"></div>
+                        <span class="text-xs mono font-medium" style="color: var(--ink-soft);">in development</span>
+                    </div>
+                    <h3 class="text-2xl font-semibold font-display mb-4" style="color: var(--ink);">Atom</h3>
+                    <p class="text-sm leading-relaxed mb-6" style="color: var(--ink-soft);">
+                        Atom is a minimalist, AI supported browser project focused on practical browsing, clean and fun vibes interface, mainly focused on task based working.<br><br>Imported GLM 5.2 for suggestions, assistance, quick answers and searches.<br><br>Inbuilt notes and calendar to plan daily tasks and tracking tasks and projects.<br><br>Privacy and security are the first priority.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="chip">python</span><span class="chip">fun & vibing ui</span><span class="chip">ai-powered</span><span class="chip">browser</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== VISION / TIMELINE ===== -->
+    <section id="vision" class="relative py-24 md:py-28" style="background: var(--surface);">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="reveal text-3xl md:text-4xl font-semibold tracking-tight mb-16" style="color: var(--ink);">
+                The roadmap <span style="display:inline-block;">🗺️</span>
+            </h2>
+
+            <div class="relative max-w-2xl mx-auto">
+                <div class="absolute left-6 md:left-1/2 top-0 bottom-0 w-[3px]" style="background: repeating-linear-gradient(to bottom, var(--ink) 0 8px, transparent 8px 16px);"></div>
+
+                <div class="reveal relative flex items-start gap-8 mb-12">
+                    <div class="hidden md:block md:w-1/2 md:text-right md:pr-8">
+                        <span class="text-[11px] mono font-medium" style="color: var(--ink-faint);">phase 01</span>
+                        <h3 class="text-base font-semibold font-display mt-1 mb-1" style="color: var(--ink);">The Beginning</h3>
+                        <p class="text-sm leading-relaxed" style="color: var(--ink-soft);">Discovered the world of code and fell in love with building things from scratch.</p>
+                    </div>
+                    <div class="relative z-10 w-11 h-11 rounded-full flex-shrink-0 flex items-center justify-center border-2" style="background: var(--pink); border-color: var(--ink); box-shadow: 3px 3px 0 var(--ink);">
+                        <iconify-icon icon="lucide:sparkles" width="17" style="color: var(--surface);"></iconify-icon>
+                    </div>
+                    <div class="md:w-1/2 md:pl-8 md:hidden">
+                        <span class="text-[11px] mono font-medium" style="color: var(--ink-faint);">phase 01</span>
+                        <h3 class="text-base font-semibold font-display mt-1 mb-1" style="color: var(--ink);">The Beginning</h3>
+                        <p class="text-sm leading-relaxed" style="color: var(--ink-soft);">Discovered the world of code and fell in love with building things from scratch.</p>
+                    </div>
+                </div>
+
+                <div class="reveal delay-100 relative flex items-start gap-8 mb-12">
+                    <div class="hidden md:block md:w-1/2 md:text-right md:pr-8">
+                        <span class="text-[11px] mono font-medium" style="color: var(--ink-faint);">phase 02</span>
+                    </div>
+                    <div class="relative z-10 w-11 h-11 rounded-full flex-shrink-0 flex items-center justify-center border-2" style="background: var(--blue); border-color: var(--ink); box-shadow: 3px 3px 0 var(--ink);">
+                        <iconify-icon icon="lucide:book-open" width="17" style="color: var(--surface);"></iconify-icon>
+                    </div>
+                    <div class="md:w-1/2 md:pl-8">
+                        <span class="text-[11px] mono font-medium md:hidden" style="color: var(--ink-faint);">phase 02</span>
+                        <h3 class="text-base font-semibold font-display mt-1 mb-1" style="color: var(--ink);">Deep Learning</h3>
+                        <p class="text-sm leading-relaxed" style="color: var(--ink-soft);">Currently here — mastering Python, OOP, and AI foundations while shipping AtomBrowse.</p>
+                        <div class="mt-3 inline-flex items-center gap-2 chip">
+                            <div class="w-1.5 h-1.5 rounded-full status-pulse" style="background: var(--mint);"></div>
+                            You are here
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal delay-200 relative flex items-start gap-8 mb-12">
+                    <div class="hidden md:block md:w-1/2 md:text-right md:pr-8">
+                        <span class="text-[11px] mono font-medium" style="color: var(--ink-faint);">phase 03</span>
+                        <h3 class="text-base font-semibold font-display mt-1 mb-1" style="color: var(--ink);">Building &amp; Shipping</h3>
+                        <p class="text-sm leading-relaxed" style="color: var(--ink-soft);">Creating real projects, contributing to open source, and making a visible impact in the tech community.</p>
+                    </div>
+                    <div class="relative z-10 w-11 h-11 rounded-full flex-shrink-0 flex items-center justify-center border-2" style="background: var(--yellow); border-color: var(--ink); box-shadow: 3px 3px 0 var(--ink);">
+                        <iconify-icon icon="lucide:package" width="17" style="color: var(--ink);"></iconify-icon>
+                    </div>
+                    <div class="md:w-1/2 md:pl-8 md:hidden">
+                        <span class="text-[11px] mono font-medium" style="color: var(--ink-faint);">phase 03</span>
+                        <h3 class="text-base font-semibold font-display mt-1 mb-1" style="color: var(--ink);">Building &amp; Shipping</h3>
+                        <p class="text-sm leading-relaxed" style="color: var(--ink-soft);">Creating real projects, contributing to open source, and making a visible impact in the tech community.</p>
+                    </div>
+                </div>
+
+                <div class="reveal delay-300 relative flex items-start gap-8">
+                    <div class="hidden md:block md:w-1/2 md:text-right md:pr-8">
+                        <span class="text-[11px] mono font-medium" style="color: var(--ink-faint);">phase 04</span>
+                    </div>
+                    <div class="relative z-10 w-11 h-11 rounded-full flex-shrink-0 flex items-center justify-center border-2" style="background: var(--coral); border-color: var(--ink); box-shadow: 3px 3px 0 var(--ink);">
+                        <iconify-icon icon="lucide:rocket" width="17" style="color: var(--surface);"></iconify-icon>
+                    </div>
+                    <div class="md:w-1/2 md:pl-8">
+                        <span class="text-[11px] mono font-medium md:hidden" style="color: var(--ink-faint);">phase 04</span>
+                        <h3 class="text-base font-semibold font-display mt-1 mb-1" style="color: var(--ink);">The Startup</h3>
+                        <p class="text-sm leading-relaxed" style="color: var(--ink-soft);">Launching my own venture — solving real problems at scale, leading a team, and creating lasting impact.</p>
+                        <div class="mt-3 inline-flex items-center gap-1 text-xs mono font-medium" style="color: var(--coral);">
+                            <iconify-icon icon="lucide:star" width="12"></iconify-icon> Ultimate Goal
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CONTACT ===== -->
+    <section id="contact" class="relative py-24 md:py-28">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="reveal text-3xl md:text-4xl font-semibold tracking-tight mb-4" style="color: var(--ink);">
+                Let's connect <span style="display:inline-block;">✌️</span>
+            </h2>
+            <p class="reveal text-sm max-w-xl mb-14" style="color: var(--ink-soft);">
+                If you share the same mindset — the hunger to build, the drive to create — I'd love to hear from you.
+            </p>
+
+            <div class="grid md:grid-cols-2 gap-8 max-w-4xl">
+                <div class="reveal card card-hover rounded-2xl p-8" style="transform: rotate(-0.6deg);">
+                    <h3 class="text-base font-semibold font-display mb-6" style="color: var(--ink);">Send a message</h3>
+                    <form id="contactForm" class="space-y-4">
+                        <div>
+                            <label class="text-xs font-semibold mb-2 block" style="color: var(--ink-soft);">Your Name</label>
+                            <input type="text" id="nameInput" name="name" placeholder="John Doe"
+                                   class="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all duration-300"
+                                   style="background: var(--bg); border: 2px solid var(--ink); color: var(--ink);">
+                        </div>
+                        <div>
+                            <label class="text-xs font-semibold mb-2 block" style="color: var(--ink-soft);">Your Email</label>
+                            <input type="email" id="emailInput" name="email" placeholder="john@example.com"
+                                   class="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all duration-300"
+                                   style="background: var(--bg); border: 2px solid var(--ink); color: var(--ink);">
+                        </div>
+                        <div>
+                            <label class="text-xs font-semibold mb-2 block" style="color: var(--ink-soft);">Message</label>
+                            <textarea id="messageInput" name="message" rows="4" placeholder="Let's build something together..."
+                                      class="w-full px-4 py-3 rounded-xl text-sm outline-none resize-none transition-all duration-300"
+                                      style="background: var(--bg); border: 2px solid var(--ink); color: var(--ink);"></textarea>
+                        </div>
+                        <button type="submit" class="btn w-full py-3 rounded-full text-sm font-semibold flex items-center justify-center gap-2"
+                                style="background: var(--coral); color: var(--surface);">
+                            <iconify-icon icon="lucide:send" width="16"></iconify-icon> Send Message
+                        </button>
+                    </form>
+                </div>
+
+                <div class="reveal delay-200 space-y-5">
+                    <a href="https://www.linkedin.com/in/shaik-abdul-vasim-332498303/" target="_blank"
+                       class="card card-hover rounded-2xl p-6 flex items-center gap-5 block" style="transform: rotate(0.5deg);">
+                        <div class="w-12 h-12 rounded-xl flex-shrink-0 flex items-center justify-center border-2" style="background: var(--blue); border-color: var(--ink);">
+                            <iconify-icon icon="mdi:linkedin" width="24" style="color: var(--surface);"></iconify-icon>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-semibold font-display mb-1" style="color: var(--ink);">LinkedIn</h4>
+                            <p class="text-xs" style="color: var(--ink-soft);">Connect with me professionally</p>
+                        </div>
+                        <iconify-icon icon="lucide:external-link" width="16" class="ml-auto" style="color: var(--ink-faint);"></iconify-icon>
+                    </a>
+
+                    <div class="card rounded-2xl p-6 flex items-center gap-5" style="transform: rotate(-0.5deg);">
+                        <div class="w-12 h-12 rounded-xl flex-shrink-0 flex items-center justify-center border-2" style="background: var(--yellow); border-color: var(--ink);">
+                            <iconify-icon icon="lucide:mail" width="22" style="color: var(--ink);"></iconify-icon>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-semibold font-display mb-1" style="color: var(--ink);">Email</h4>
+                            <p class="text-xs" style="color: var(--ink-soft);">Drop me a message anytime</p>
+                        </div>
+                    </div>
+
+                    <div class="card rounded-2xl p-6" style="border-color: var(--mint); transform: rotate(0.4deg);">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-2.5 h-2.5 rounded-full status-pulse" style="background: var(--mint);"></div>
+                            <span class="text-sm font-semibold font-display" style="color: var(--ink);">Open to Collaborate</span>
+                        </div>
+                        <p class="text-sm leading-relaxed" style="color: var(--ink-soft);">
+                            Whether it's a project, a startup idea, or just a conversation about tech and business — I'm always open to meeting like-minded people.
+                        </p>
+                        <div class="mt-4 flex flex-wrap gap-2">
+                            <span class="chip">co-founding</span><span class="chip">projects</span><span class="chip">ideas</span><span class="chip">mentorship</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="relative py-12" style="border-top: 2.5px solid var(--ink);">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="flex items-center gap-3">
+                    <div class="w-7 h-7 rounded-lg flex items-center justify-center text-[10px] font-semibold mono border-2" style="background: var(--coral); color: var(--surface); border-color: var(--ink);">SV</div>
+                    <span class="text-sm" style="color: var(--ink-faint);">© 2025 Shaik Abdul Vasim. Made with 🐍 and way too much coffee.</span>
+                </div>
+                <div class="flex items-center gap-6">
+                    <a href="https://www.linkedin.com/in/shaik-abdul-vasim-332498303/" target="_blank" style="color: var(--ink-faint);">
+                        <iconify-icon icon="mdi:linkedin" width="20"></iconify-icon>
+                    </a>
+                    <a href="#hero" style="color: var(--ink-faint);">
+                        <iconify-icon icon="lucide:arrow-up" width="20"></iconify-icon>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        const reveals = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+        reveals.forEach(el => observer.observe(el));
+
+        const mobileToggle = document.getElementById('mobileToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileClose = document.getElementById('mobileClose');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        mobileToggle.addEventListener('click', () => mobileMenu.classList.add('open'));
+        mobileClose.addEventListener('click', () => mobileMenu.classList.remove('open'));
+        mobileLinks.forEach(link => link.addEventListener('click', () => mobileMenu.classList.remove('open')));
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href');
+                if (targetId.length > 1) {
+                    const target = document.querySelector(targetId);
+                    if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+                }
+            });
+        });
+
+        const nav = document.querySelector('nav');
+        window.addEventListener('scroll', () => {
+            nav.style.borderBottomColor = 'var(--ink)';
+        });
+
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            const colors = {
+                success: { bg: '#FFFCF4', border: '#2BB673', text: '#201A2C', icon: 'lucide:check-circle' },
+                error: { bg: '#FFFCF4', border: '#FF6B4A', text: '#201A2C', icon: 'lucide:alert-circle' },
+                info: { bg: '#FFFCF4', border: '#3D5AFE', text: '#201A2C', icon: 'lucide:info' }
+            };
+            const c = colors[type];
+            toast.className = 'toast-enter rounded-xl px-5 py-4 flex items-center gap-3 max-w-sm';
+            toast.style.cssText = `background: ${c.bg}; border: 2.5px solid ${c.border}; box-shadow: 4px 4px 0 var(--ink);`;
+            toast.innerHTML = `<iconify-icon icon="${c.icon}" width="20" style="color: ${c.text};"></iconify-icon><span class="text-sm font-medium" style="color:${c.text};">${message}</span>`;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.className = toast.className.replace('toast-enter', 'toast-exit');
+                setTimeout(() => toast.remove(), 400);
+            }, 3000);
+        }
+
+        function burstConfetti(x, y) {
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            const colors = ['#FF6B4A', '#3D5AFE', '#FFC93C', '#FF5DA2', '#2BB673'];
+            for (let i = 0; i < 18; i++) {
+                const piece = document.createElement('div');
+                piece.className = 'confetti-piece';
+                piece.style.background = colors[i % colors.length];
+                piece.style.left = x + 'px';
+                piece.style.top = y + 'px';
+                piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+                const angle = (Math.PI * 2 * i) / 18;
+                const dist = 60 + Math.random() * 60;
+                const dx = Math.cos(angle) * dist;
+                const dy = Math.sin(angle) * dist;
+                document.body.appendChild(piece);
+                piece.animate([
+                    { transform: 'translate(0,0) rotate(0deg)', opacity: 1 },
+                    { transform: `translate(${dx}px, ${dy}px) rotate(${Math.random()*360}deg)`, opacity: 0 }
+                ], { duration: 700 + Math.random() * 300, easing: 'cubic-bezier(0.16,1,0.3,1)' });
+                setTimeout(() => piece.remove(), 1100);
+            }
+        }
+
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('nameInput').value.trim();
+            const email = document.getElementById('emailInput').value.trim();
+            const message = document.getElementById('messageInput').value.trim();
+
+            if (!name || !email || !message) { showToast('Please fill in all fields', 'error'); return; }
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showToast('Please enter a valid email', 'error'); return; }
+
+            const btn = this.querySelector('button[type="submit"]');
+            btn.innerHTML = '<iconify-icon icon="lucide:loader-2" width="16" class="animate-spin"></iconify-icon> Sending...';
+            btn.disabled = true;
+
+            const formData = new FormData(this);
+            fetch('https://formspree.io/f/xwvgkvqy', { method: 'POST', body: formData, headers: { 'Accept': 'application/json' } })
+                .then(response => {
+                    if (response.ok) {
+                        const rect = btn.getBoundingClientRect();
+                        burstConfetti(rect.left + rect.width / 2, rect.top);
+                        showToast('Message sent! 🎉', 'success');
+                        this.reset();
+                    } else {
+                        showToast('Oops! Something went wrong.', 'error');
+                    }
+                })
+                .catch(() => showToast('Network error. Please try again.', 'error'))
+                .finally(() => {
+                    btn.innerHTML = '<iconify-icon icon="lucide:send" width="16"></iconify-icon> Send Message';
+                    btn.disabled = false;
+                });
+        });
+
+        const sections = document.querySelectorAll('section[id]');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => { if (window.scrollY >= section.offsetTop - 100) current = section.getAttribute('id'); });
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) link.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
